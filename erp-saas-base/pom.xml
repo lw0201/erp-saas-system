@@ -75,6 +75,7 @@
     </dependencyManagement>
     
     <build>
+        <finalName>erp-saas-base</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
