@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuoxun.it.iam.dao.IMenuDao">
+
+    <!--基础字段返回信息配置 -->
+    <resultMap id="BaseResultMap" type="com.zhuoxun.it.iam.entity.MenuVO">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="pid" jdbcType="VARCHAR" property="pid" />
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+        <result column="menu_type" jdbcType="VARCHAR" property="menuType" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="component" jdbcType="VARCHAR" property="component" />
+        <result column="path" jdbcType="VARCHAR" property="path" />
+        <result column="sort" jdbcType="VARCHAR" property="sort" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+        <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+    </resultMap>
+
+    <!--基础字段信息配置 -->
+    <sql id="Base_Column_List">
+        `id`,`pid`,`menu_name`,`menu_type`,`icon`,
+        `component`,`path`,`sort`,`type`,`tenant_id`,`created_by`,
+        `created_date`,`last_update_by`,`last_update_date`
+    </sql>
+
+    <!--基础条件查询配置 -->
+    <sql id="Base_Where_Clause">
+        <where>
+            <if test="entity.id != null">
+                and `id` = #{entity.id,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.pid != null">
+                and `pid` = #{entity.pid,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.menuName != null">
+                and `menu_name` = #{entity.menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.menuType != null">
+                and `menu_type` = #{entity.menuType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.icon != null">
+                and `icon` = #{entity.icon,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.component != null">
+                and `component` = #{entity.component,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.path != null">
+                and `path` = #{entity.path,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.sort != null">
+                and `sort` = #{entity.sort,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.type != null">
+                and `type` = #{entity.type,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.tenantId != null">
+                and `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.createdBy != null">
+                and `created_by` = #{entity.createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.createdDate != null">
+                and `created_date` = #{entity.createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                and `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.lastUpdateDate != null">
+                and `last_update_date` = #{entity.lastUpdateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <!--构造条件 -->
+    <sql id="Wrapper_Where_Clause">
+        <where>
+            <foreach collection="wp.criterias" item="criteria" separator="or">
+                <trim prefix="(" prefixOverrides="and" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                         <include refid="Wrapper_Where_Op_Clause"></include>
+                    </foreach>
+                </trim>
+            </foreach>
+        </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and LOWER(`id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'pid'">
+                        and LOWER(`pid`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'menuName'">
+                        and LOWER(`menu_name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'menuType'">
+                        and LOWER(`menu_type`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'icon'">
+                        and LOWER(`icon`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'component'">
+                        and LOWER(`component`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'path'">
+                        and LOWER(`path`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'sort'">
+                        and LOWER(`sort`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'type'">
+                        and LOWER(`type`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and LOWER(`tenant_id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and LOWER(`created_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and LOWER(`created_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and LOWER(`last_update_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and LOWER(`last_update_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and `id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'pid'">
+                        and `pid`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'menuName'">
+                        and `menu_name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'menuType'">
+                        and `menu_type`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'icon'">
+                        and `icon`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'component'">
+                        and `component`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'path'">
+                        and `path`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'sort'">
+                        and `sort`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'type'">
+                        and `type`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and `tenant_id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and `created_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and `created_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and `last_update_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and `last_update_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--查询操作构造器 -->
+    <sql id="Wrapper_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'eq'">
+                = #{criterion.value}
+            </when>
+            <when test="criterion.op.type == 'ne'">
+                != #{criterion.value}
+            </when>
+            <when test="criterion.op.type == 'gt'">
+                <![CDATA[ > #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'ge'">
+                <![CDATA[ >= #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'lt'">
+                <![CDATA[ < #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'le'">
+                <![CDATA[ <= #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'like'">
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
+            </when>
+            <when test="criterion.op.type == 'notLike'">
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
+            </when>
+            <when test="criterion.op.type == 'isNull'">
+                is null
+            </when>
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
+            </when>
+            <when test="criterion.op.type == 'in'">
+                in
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
+                    #{value}
+                </foreach>
+            </when>
+            <when test="criterion.op.type == 'notIn'">
+                not in
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
+                    #{value}
+                </foreach>
+            </when>
+            <when test="criterion.op.type == 'between'">
+                BETWEEN #{criterion.value} and #{criterion.secondValue}
+            </when>
+            <when test="criterion.op.type == 'notBetween'">
+                NOT BETWEEN #{criterion.value} and #{criterion.secondValue}
+            </when>
+        </choose>
+    </sql>
+
+    <!--构造排序条件 -->
+    <sql id="Wrapper_Order_Clause">
+        <if test="wp.sorts != null">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
+                <choose>
+                    <when test="st.attr == 'id'">
+                        `id` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'pid'">
+                        `pid` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'menuName'">
+                        `menu_name` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'menuType'">
+                        `menu_type` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'icon'">
+                        `icon` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'component'">
+                        `component` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'path'">
+                        `path` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'sort'">
+                        `sort` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'type'">
+                        `type` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'tenantId'">
+                        `tenant_id` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'createdBy'">
+                        `created_by` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'createdDate'">
+                        `created_date` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'lastUpdateBy'">
+                        `last_update_by` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'lastUpdateDate'">
+                        `last_update_date` ${st.order.type}
+                    </when>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!--根据主键信息查询返回实体对象 -->
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu
+        where `id` = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据实体对象信息查询返回实体对象 -->
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu
+        <include refid="Base_Where_Clause" />
+    </select>
+
+    <!--根据实体对象信息查询返回实体对象集合 -->
+    <select id="findList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--根据主键信息删除实体对象 -->
+    <delete id="deleteById" parameterType="java.io.Serializable">
+        delete from menu
+        where `id` = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="delete" parameterType="com.zhuoxun.it.iam.entity.MenuVO">
+        delete from menu
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!--根据实体对象删除数据-->
+    <delete id="deletes" parameterType="com.zhuoxun.it.iam.entity.MenuVO">
+        delete from menu where `id` in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.attrName}
+        </foreach>
+    </delete>
+
+    <!--插入实体对象 -->
+    <insert id="insert" parameterType="com.zhuoxun.it.iam.entity.MenuVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
+            select uuid() 
+        </selectKey>
+        insert into menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="pid != null">
+                `pid`,
+            </if>
+            <if test="menuName != null">
+                `menu_name`,
+            </if>
+            <if test="menuType != null">
+                `menu_type`,
+            </if>
+            <if test="icon != null">
+                `icon`,
+            </if>
+            <if test="component != null">
+                `component`,
+            </if>
+            <if test="path != null">
+                `path`,
+            </if>
+            <if test="sort != null">
+                `sort`,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="tenantId != null">
+                `tenant_id`,
+            </if>
+            <if test="createdBy != null">
+                `created_by`,
+            </if>
+            <if test="createdDate != null or createdDate == null">
+                `created_date`,
+            </if>
+            <if test="lastUpdateBy != null">
+                `last_update_by`,
+            </if>
+            <if test="lastUpdateDate != null or lastUpdateDate == null">
+                `last_update_date`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuType != null">
+                #{menuType,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null or createdDate == null">
+                current_timestamp(),
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateDate != null or lastUpdateDate == null">
+                current_timestamp(),
+            </if>
+        </trim>
+    </insert>
+
+    <!--插入实体对象 -->
+    <insert id="inserts" parameterType="com.zhuoxun.it.iam.entity.MenuVO">
+        insert into menu
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            `id`,
+            `pid`,
+            `menu_name`,
+            `menu_type`,
+            `icon`,
+            `component`,
+            `path`,
+            `sort`,
+            `type`,
+            `tenant_id`,
+            `created_by`,
+            `created_date`,
+            `last_update_by`,
+            `last_update_date`
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            UUID(),
+            #{pid,jdbcType=VARCHAR},
+            #{menuName,jdbcType=VARCHAR},
+            #{menuType,jdbcType=VARCHAR},
+            #{icon,jdbcType=VARCHAR},
+            #{component,jdbcType=VARCHAR},
+            #{path,jdbcType=VARCHAR},
+            #{sort,jdbcType=VARCHAR},
+            #{type,jdbcType=VARCHAR},
+            #{tenantId,jdbcType=VARCHAR},
+            #{createdBy,jdbcType=VARCHAR},
+            current_timestamp(),
+            #{lastUpdateBy,jdbcType=VARCHAR},
+            current_timestamp()
+            )
+        </foreach>
+    </insert>
+
+    <!--更新实体对象 -->
+    <update id="update">
+        update menu
+        <set>
+            <if test="entity.pid != null">
+                `pid` = #{entity.pid,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.menuName != null">
+                `menu_name` = #{entity.menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.menuType != null">
+                `menu_type` = #{entity.menuType,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.icon != null">
+                `icon` = #{entity.icon,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.component != null">
+                `component` = #{entity.component,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.path != null">
+                `path` = #{entity.path,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.sort != null">
+                `sort` = #{entity.sort,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.type != null">
+                `type` = #{entity.type,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.tenantId != null">
+                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
+                `last_update_date` = current_timestamp(),
+            </if>
+        </set>
+        where `id` = #{entity.id,jdbcType=VARCHAR}
+    </update>
+
+    <!--构造器查询 -->
+    <select id="queryByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--构造器查询 -->
+    <select id="findByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
+        </if>
+    </select>
+
+    <!--更新实体对象 -->
+    <update id="updateByWrapper">
+        update menu
+        <set>
+            <if test="entity.id != null">
+                `id` = #{entity.id,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.pid != null">
+                `pid` = #{entity.pid,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.menuName != null">
+                `menu_name` = #{entity.menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.menuType != null">
+                `menu_type` = #{entity.menuType,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.icon != null">
+                `icon` = #{entity.icon,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.component != null">
+                `component` = #{entity.component,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.path != null">
+                `path` = #{entity.path,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.sort != null">
+                `sort` = #{entity.sort,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.type != null">
+                `type` = #{entity.type,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.tenantId != null">
+                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
+                `last_update_date` = current_timestamp(),
+            </if>
+        </set>
+        <include refid="Wrapper_Where_Clause" />
+    </update>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="deleteByWrapper">
+        delete from menu
+        <include refid="Wrapper_Where_Clause" />
+    </delete>
+
+</mapper>

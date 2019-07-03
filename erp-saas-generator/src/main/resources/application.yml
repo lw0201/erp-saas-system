@@ -1,0 +1,33 @@
+#服务端口配置
+server:
+   port: 8081
+#Spring数据源配置名称配置
+spring:
+   application:
+      name: Generator
+   datasource:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://120.77.253.118:3308/erp-iam?serverTimezone=UTC
+      username: root
+      password: 123456
+jboot:
+   package: com.zhuoxun.it.iam
+   java: src/main/java
+   resource: src/main/resources
+#mybatis扫描配置
+mybatis:
+   mapper-locations: classpath:mappers/*.xml
+   type-aliases-package: com.zhuoxun.it.iam.entity
+   configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+###swagger ui 配置
+swagger:
+   enabled: true
+   package: com.zhuoxun.it
+###分頁插件使用配置
+pagehelper:
+   helper-dialect: mysql
+   reasonable: true
+   support-methods-arguments: true
+   params: count=countsql

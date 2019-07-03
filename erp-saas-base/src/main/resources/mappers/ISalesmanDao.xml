@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuoxun.it.base.dao.ISalesmanDao">
+
+    <!--基础字段返回信息配置 -->
+    <resultMap id="BaseResultMap" type="com.zhuoxun.it.base.entity.SalesmanVO">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+        <result column="code_name" jdbcType="VARCHAR" property="codeName" />
+        <result column="area" jdbcType="VARCHAR" property="area" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+        <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+    </resultMap>
+
+    <!--基础字段信息配置 -->
+    <sql id="Base_Column_List">
+        `id`,`tenant_id`,`name`,`phone`,`position`,
+        `code_name`,`area`,`state`,`created_by`,`created_date`,`last_update_by`,
+        `last_update_date`
+    </sql>
+
+    <!--基础条件查询配置 -->
+    <sql id="Base_Where_Clause">
+        <where>
+            <if test="entity.id != null">
+                and `id` = #{entity.id,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.tenantId != null">
+                and `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.name != null">
+                and `name` = #{entity.name,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.phone != null">
+                and `phone` = #{entity.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.position != null">
+                and `position` = #{entity.position,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.codeName != null">
+                and `code_name` = #{entity.codeName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.area != null">
+                and `area` = #{entity.area,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.state != null">
+                and `state` = #{entity.state,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.createdBy != null">
+                and `created_by` = #{entity.createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.createdDate != null">
+                and `created_date` = #{entity.createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                and `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.lastUpdateDate != null">
+                and `last_update_date` = #{entity.lastUpdateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <!--构造条件 -->
+    <sql id="Wrapper_Where_Clause">
+        <where>
+            <foreach collection="wp.criterias" item="criteria" separator="or">
+                <trim prefix="(" prefixOverrides="and" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                         <include refid="Wrapper_Where_Op_Clause"></include>
+                    </foreach>
+                </trim>
+            </foreach>
+        </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and LOWER(`id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and LOWER(`tenant_id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'name'">
+                        and LOWER(`name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'phone'">
+                        and LOWER(`phone`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'position'">
+                        and LOWER(`position`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'codeName'">
+                        and LOWER(`code_name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'area'">
+                        and LOWER(`area`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'state'">
+                        and LOWER(`state`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and LOWER(`created_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and LOWER(`created_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and LOWER(`last_update_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and LOWER(`last_update_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and `id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and `tenant_id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'name'">
+                        and `name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'phone'">
+                        and `phone`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'position'">
+                        and `position`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'codeName'">
+                        and `code_name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'area'">
+                        and `area`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'state'">
+                        and `state`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and `created_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and `created_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and `last_update_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and `last_update_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--查询操作构造器 -->
+    <sql id="Wrapper_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'eq'">
+                = #{criterion.value}
+            </when>
+            <when test="criterion.op.type == 'ne'">
+                != #{criterion.value}
+            </when>
+            <when test="criterion.op.type == 'gt'">
+                <![CDATA[ > #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'ge'">
+                <![CDATA[ >= #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'lt'">
+                <![CDATA[ < #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'le'">
+                <![CDATA[ <= #{criterion.value} ]]>
+            </when>
+            <when test="criterion.op.type == 'like'">
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
+            </when>
+            <when test="criterion.op.type == 'notLike'">
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
+            </when>
+            <when test="criterion.op.type == 'isNull'">
+                is null
+            </when>
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
+            </when>
+            <when test="criterion.op.type == 'in'">
+                in
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
+                    #{value}
+                </foreach>
+            </when>
+            <when test="criterion.op.type == 'notIn'">
+                not in
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
+                    #{value}
+                </foreach>
+            </when>
+            <when test="criterion.op.type == 'between'">
+                BETWEEN #{criterion.value} and #{criterion.secondValue}
+            </when>
+            <when test="criterion.op.type == 'notBetween'">
+                NOT BETWEEN #{criterion.value} and #{criterion.secondValue}
+            </when>
+        </choose>
+    </sql>
+
+    <!--构造排序条件 -->
+    <sql id="Wrapper_Order_Clause">
+        <if test="wp.sorts != null">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
+                <choose>
+                    <when test="st.attr == 'id'">
+                        `id` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'tenantId'">
+                        `tenant_id` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'name'">
+                        `name` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'phone'">
+                        `phone` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'position'">
+                        `position` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'codeName'">
+                        `code_name` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'area'">
+                        `area` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'state'">
+                        `state` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'createdBy'">
+                        `created_by` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'createdDate'">
+                        `created_date` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'lastUpdateBy'">
+                        `last_update_by` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'lastUpdateDate'">
+                        `last_update_date` ${st.order.type}
+                    </when>
+                </choose>
+            </foreach>
+        </if>
+    </sql>
+
+    <!--根据主键信息查询返回实体对象 -->
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salesman
+        where `id` = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据实体对象信息查询返回实体对象 -->
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salesman
+        <include refid="Base_Where_Clause" />
+    </select>
+
+    <!--根据实体对象信息查询返回实体对象集合 -->
+    <select id="findList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salesman
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--根据主键信息删除实体对象 -->
+    <delete id="deleteById" parameterType="java.io.Serializable">
+        delete from salesman
+        where `id` = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="delete" parameterType="com.zhuoxun.it.base.entity.SalesmanVO">
+        delete from salesman
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!--根据实体对象删除数据-->
+    <delete id="deletes" parameterType="com.zhuoxun.it.base.entity.SalesmanVO">
+        delete from salesman where `id` in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.attrName}
+        </foreach>
+    </delete>
+
+    <!--插入实体对象 -->
+    <insert id="insert" parameterType="com.zhuoxun.it.base.entity.SalesmanVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
+            select uuid() 
+        </selectKey>
+        insert into salesman
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="tenantId != null">
+                `tenant_id`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                `phone`,
+            </if>
+            <if test="position != null">
+                `position`,
+            </if>
+            <if test="codeName != null">
+                `code_name`,
+            </if>
+            <if test="area != null">
+                `area`,
+            </if>
+            <if test="state != null">
+                `state`,
+            </if>
+            <if test="createdBy != null">
+                `created_by`,
+            </if>
+            <if test="createdDate != null or createdDate == null">
+                `created_date`,
+            </if>
+            <if test="lastUpdateBy != null">
+                `last_update_by`,
+            </if>
+            <if test="lastUpdateDate != null or lastUpdateDate == null">
+                `last_update_date`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="codeName != null">
+                #{codeName,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null or createdDate == null">
+                current_timestamp(),
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateDate != null or lastUpdateDate == null">
+                current_timestamp(),
+            </if>
+        </trim>
+    </insert>
+
+    <!--插入实体对象 -->
+    <insert id="inserts" parameterType="com.zhuoxun.it.base.entity.SalesmanVO">
+        insert into salesman
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            `id`,
+            `tenant_id`,
+            `name`,
+            `phone`,
+            `position`,
+            `code_name`,
+            `area`,
+            `state`,
+            `created_by`,
+            `created_date`,
+            `last_update_by`,
+            `last_update_date`
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            UUID(),
+            #{item.tenantId,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.phone,jdbcType=VARCHAR},
+            #{item.position,jdbcType=VARCHAR},
+            #{item.codeName,jdbcType=VARCHAR},
+            #{item.area,jdbcType=VARCHAR},
+            #{item.state,jdbcType=VARCHAR},
+            #{item.createdBy,jdbcType=VARCHAR},
+            current_timestamp(),
+            #{item.lastUpdateBy,jdbcType=VARCHAR},
+            current_timestamp()
+            )
+        </foreach>
+    </insert>
+
+    <!--更新实体对象 -->
+    <update id="update">
+        update salesman
+        <set>
+            <if test="entity.tenantId != null">
+                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.name != null">
+                `name` = #{entity.name,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.phone != null">
+                `phone` = #{entity.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.position != null">
+                `position` = #{entity.position,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.codeName != null">
+                `code_name` = #{entity.codeName,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.area != null">
+                `area` = #{entity.area,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.state != null">
+                `state` = #{entity.state,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
+                `last_update_date` = current_timestamp(),
+            </if>
+        </set>
+        where `id` = #{entity.id,jdbcType=VARCHAR}
+    </update>
+
+    <!--构造器查询 -->
+    <select id="queryByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salesman
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--构造器查询 -->
+    <select id="findByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salesman
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
+        </if>
+    </select>
+
+    <!--更新实体对象 -->
+    <update id="updateByWrapper">
+        update salesman
+        <set>
+            <if test="entity.id != null">
+                `id` = #{entity.id,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.tenantId != null">
+                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.name != null">
+                `name` = #{entity.name,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.phone != null">
+                `phone` = #{entity.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.position != null">
+                `position` = #{entity.position,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.codeName != null">
+                `code_name` = #{entity.codeName,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.area != null">
+                `area` = #{entity.area,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.state != null">
+                `state` = #{entity.state,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateBy != null">
+                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
+                `last_update_date` = current_timestamp(),
+            </if>
+        </set>
+        <include refid="Wrapper_Where_Clause" />
+    </update>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="deleteByWrapper">
+        delete from salesman
+        <include refid="Wrapper_Where_Clause" />
+    </delete>
+
+</mapper>
